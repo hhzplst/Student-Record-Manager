@@ -1,8 +1,13 @@
 import java.util.ArrayList;
 
 public class StudentRecordManager implements Iterable<Student> {
-  private static ArrayList<Student> studentList = new ArrayList<>();
-  private static ArrayList<Integer> studentIDList = new ArrayList<>();
+  private ArrayList<Student> studentList;
+  private ArrayList<Integer> studentIDList;
+
+  public StudentRecordManager() {
+    studentList = new ArrayList<>();
+    studentIDList = new ArrayList<>();  
+  }
 
   public void addStudent(Student s) {
     if (studentList.contains(s))
