@@ -18,4 +18,17 @@ public class Student {
     return new MyIterator<Course>(courseList);
   }
 
+  public boolean equals(Student s) {
+    if (s == this) return true;
+    if (!(s instanceof Student)) return false;
+
+    return ID == s.ID;
+  }
+
+  public int hashCode() {
+    int result = 17;
+    result = 31 * result + ID;
+    return result;
+  } 
+
 }
