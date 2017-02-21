@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 
 public class StudentRecordManager implements Iterable<Student> {
-  private static ArrayList<Student> studentList;
+  private static ArrayList<Student> studentList = new ArrayList<>();
+  private static ArrayList<Integer> studentIDList = new ArrayList<>();
 
   public void addStudent(Student s) {
-    studentList.add(s);
+    if (studentList.contains(s))
+      System.out.println("Student already exists!");
+    else {
+      studentList.add(s);
+      studentIDList.add(s.getID());
+    }
   }
 
   public void removeStudent(Student s) {
@@ -16,11 +22,16 @@ public class StudentRecordManager implements Iterable<Student> {
   }
 
   public Student searchStudentById(int id) {
-
+    return studentList.get(studentIDList.indexOf(id));
   }
 
-  public ArrayList<Student> searchStudentByName(String fName, String lName) {
-    
+  public ArrayList<Student> searchStudentByName(String searchStr) {
+    ArrayList<Student> result = new ArrayList<>();
+    for (Student s : studentList) {
+      if (s.getFName().contains(searchStr) || s.getLName().contains(searchStr))
+        result.add(s);
+    }
+    return result;
   }
 
   public MyIterator<Student> iterator() {

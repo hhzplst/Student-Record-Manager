@@ -14,6 +14,18 @@ public class Student {
     courseList = new ArrayList<>();
   }
 
+  public int getID() {
+    return ID;
+  }
+
+  public String getFName() {
+    return fName;
+  }
+
+  public String getLName() {
+    return lName;
+  }
+
   public MyIterator<Course> getCourseIterator() {
     return new MyIterator<Course>(courseList);
   }
