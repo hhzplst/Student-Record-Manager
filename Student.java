@@ -43,4 +43,8 @@ public class Student {
     return result;
   } 
 
+  public static class Course {
+    
+  }
+
 }
