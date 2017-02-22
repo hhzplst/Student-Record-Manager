@@ -56,5 +56,9 @@ public class Student {
 
       return title == c.title;
     }
+
+    public String toString() {
+      return title + " : " + grade;
+    }
   }
 }
