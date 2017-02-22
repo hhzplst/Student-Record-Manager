@@ -41,6 +41,21 @@ public class StudentRecordManager implements Iterable<Student> {
 
   public MyIterator<Student> iterator() {
     return new MyIterator<Student>(studentList);
+  }
+
+  public void addCourse(Student s, Student.Course c) {
+    if (s.getCourseList().contains(c))
+      System.out.printf("Course already exists for student %n", s.getID());
+    else
+      s.getCourseList().add(c);
+  }
+
+  public void removeCourse(Student s, Student.Course c) {
+    try {
+      s.getCourseList().remove(c);
+    } catch(NullPointerException e) {
+      System.out.printf("No such course for student %n", s.getID());
+    }
   } 
 
 }

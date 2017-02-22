@@ -26,6 +26,10 @@ public class Student {
     return lName;
   }
 
+  public ArrayList<Course> getCourseList() {
+    return courseList;
+  }
+
   public MyIterator<Course> getCourseIterator() {
     return new MyIterator<Course>(courseList);
   }
@@ -37,14 +41,20 @@ public class Student {
     return ID == s.ID;
   }
 
-  public int hashCode() {
-    int result = 17;
-    result = 31 * result + ID;
-    return result;
-  } 
+  public class Course {
+    private String title, description;
+    private char grade; 
 
-  public static class Course {
-    
+    public Course(String title, String description) {
+      this.title = title;
+      this.description = description;
+    }
+
+    public boolean equals(Course c) {
+      if (c == this) return true;
+      if (!(c instanceof Course)) return false;
+
+      return title == c.title;
+    }
   }
-
 }
