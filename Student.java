@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class Student {
   private int ID;
@@ -30,8 +31,20 @@ public class Student {
     return courseList;
   }
 
-  public MyIterator<Course> getCourseIterator() {
-    return new MyIterator<Course>(courseList);
+  public Iterator<Course> getCourseIterator() {
+    return new Iterator<Course>() {
+      int index = 0;
+
+      public Course getNext() {
+        if (!hasNext())
+          throw new NoSuchElementException();
+        return courseList.get(index++);
+      } 
+
+      public boolean hasNext() {
+        return index != courseList.size();
+      }
+    };
   }
 
   public boolean equals(Student s) {
@@ -48,13 +61,6 @@ public class Student {
     public Course(String title, String description) {
       this.title = title;
       this.description = description;
-    }
-
-    public boolean equals(Course c) {
-      if (c == this) return true;
-      if (!(c instanceof Course)) return false;
-
-      return title == c.title;
     }
 
     public String toString() {
