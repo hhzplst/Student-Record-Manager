@@ -55,12 +55,11 @@ public class Student {
   }
 
   public class Course {
-    private String title, description;
+    private String title;
     private char grade; 
 
-    public Course(String title, String description) {
+    public Course(String title) {
       this.title = title;
-      this.description = description;
     }
 
     public String toString() {
