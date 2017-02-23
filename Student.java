@@ -15,6 +15,14 @@ public class Student {
     courseList = new ArrayList<>();
   }
 
+  public Student(Student s) {
+    ID = s.ID;
+    fName = s.fName;
+    lName = s.lName;
+    email = s.email;
+    courseList = s.courseList;  
+  }
+
   public int getID() {
     return ID;
   }
