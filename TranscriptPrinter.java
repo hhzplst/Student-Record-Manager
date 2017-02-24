@@ -1,20 +1,31 @@
 import java.util.ArrayList;
 
 public class TranscriptPrinter {
-  public void printTranscript(MyIterator<Student> it, int id) {
-    System.out.printf("\nTranscript for student %d\n", id);
-    while(it.hasNext()) {
-      Student currentStudent = it.next();
-      if (currentStudent.getID() == id) {
-        MyIterator<Student.Course> courseIt = currentStudent.getCourseIterator();
-        while(courseIt.hasNext()) {
-          System.out.println(courseIt.next());
-        }
-      }
+  private StudentRecordManager rm;
+
+  public TranscriptPrinter(StudentRecordManager rm) {
+    this.rm = rm;
+  }
+
+  public void printTranscript(int id) {
+    Student s = rm.searchStudentById(id);
+    Iterator<Student.Course> it = s.getCourseIterator();
+    printTranscriptHeader(s);
+
+    while (it.hasNext()) {
+      System.out.println(it.getNext());
     }
   } 
   
-  public void printTranscript(MyIterator<Student> it, ArrayList<Integer> ids) {
-
+  public void printTranscript(ArrayList<Integer> ids) {
+    for (int id : ids) {
+      printTranscript(id);
+      System.out.println();
+    }
   } 
+
+  private void printTranscriptHeader(Student s) {
+    System.out.printf("\nPrinting transcript for %s %s...\n", 
+                                      s.getFName(), s.getLName());
+  }
 }

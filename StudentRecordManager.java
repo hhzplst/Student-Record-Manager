@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
-public class StudentRecordManager implements Iterable<Student> {
+public class StudentRecordManager {
   private ArrayList<Student> studentList;
   private ArrayList<Integer> studentIDList;
 
@@ -10,52 +11,60 @@ public class StudentRecordManager implements Iterable<Student> {
   }
 
   public void addStudent(Student s) {
-    if (studentList.contains(s))
+    if (studentIDList.contains(s.getID()))
       System.out.println("Student already exists!");
     else {
-      studentList.add(s);
+      studentList.add(new Student(s));
       studentIDList.add(s.getID());
     }
   }
 
   public void removeStudent(Student s) {
-    try {
-      studentList.remove(s);
-    } catch(NullPointerException e) {
-      System.out.println("No such student exists!");
-    }
+    studentList.remove(findStudentById(s.getID()));
+    studentIDList.remove(new Integer(s.getID()));
   }
 
   public Student searchStudentById(int id) {
-    return studentList.get(studentIDList.indexOf(id));
+    Student result = findStudentById(id);
+    return new Student(result);
   }
 
   public ArrayList<Student> searchStudentByName(String searchStr) {
-    ArrayList<Student> result = new ArrayList<>();
+    ArrayList<Student> results = new ArrayList<>();
     for (Student s : studentList) {
       if (s.getFName().contains(searchStr) || s.getLName().contains(searchStr))
-        result.add(s);
+        results.add(s);
     }
-    return result;
+    return new ArrayList<Student>(results);
   }
 
-  public MyIterator<Student> iterator() {
-    return new MyIterator<Student>(studentList);
+  public Iterator<Student> getStudentIterator() {
+    return new Iterator<Student>() {
+      int index = 0;
+
+      public Student getNext() {
+        if (!hasNext())
+          throw new NoSuchElementException();
+        return studentList.get(index++);
+      } 
+
+      public boolean hasNext() {
+        return index != studentList.size();
+      }
+    };
   }
 
-  public void addCourse(Student s, Student.Course c) {
-    if (s.getCourseList().contains(c))
-      System.out.printf("Course already exists for student %n", s.getID());
-    else
+  public void addCourse(int id, Student.Course c) {
+      Student s = findStudentById(id);
       s.getCourseList().add(c);
   }
 
-  public void removeCourse(Student s, Student.Course c) {
-    try {
+  public void removeCourse(int id, Student.Course c) {
+      Student s = findStudentById(id);
       s.getCourseList().remove(c);
-    } catch(NullPointerException e) {
-      System.out.printf("No such course for student %n", s.getID());
-    }
   } 
 
+  private Student findStudentById(int id) {
+    return studentList.get(studentIDList.indexOf(id));
+  }
 }
